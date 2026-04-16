@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Y2Klick</title>
+</head>
+<body>
+  <p>Date: <span id="date">0</span></p>
+  <button onclick="increment()">Click me!</button>
+
+  <script>
+    const startDate = new Date(1900, 0, 1);
+    var clicks = 0;
+    var newDate = new Date(startDate);
+    
+    function update() {
+        newDate.setDate(startDate.getDate() + clicks);
+        document.getElementById("date").textContent = newDate.toISOString().split("T")[0];  
+    }
+
+    function increment() {
+      clicks += 1;
+      update();
+    }
+
+    update();
+  </script>
+</body>
+</html>
