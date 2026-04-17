@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
+  
 <head>
   <title>Y2Klick</title>
 </head>
 <body>
-  <p>Date: <span id="date">0</span></p>
-  <button onclick="increment()">Click me!</button>
+  <div class="game">
+    <h1>Y2Klick</h1>
+    <button onclick="increment()">Date: <span id="date"></span></button>
+  </div>
 
   <script>
     const startDate = new Date(1900, 0, 1);
-    var clicks = 0;
-    var newDate = new Date(startDate);
+    const dateEl = document.getElementById("date");
+    let clicks = 0;
     
     function update() {
-        newDate.setDate(startDate.getDate() + clicks);
-        document.getElementById("date").textContent = newDate.toISOString().split("T")[0];  
+      const newDate = new Date(startDate);
+      newDate.setDate(newDate.getDate() + clicks);
+      dateEl.textContent = newDate.toLocaleDateString("en-US");
     }
 
     function increment() {
