@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-  
+
 <head>
   <title>Y2Klick</title>
 </head>
+
 <body>
   <div class="game">
-    <p id="message"></p>
     <button onclick="increment()">Date: <span id="date"></span></button>
+    <div id="textbox">
+      <p id="message"></p>
+    </div>
   </div>
 
   <script>
     const startDate = new Date(1900, 0, 1);
     const dateEl = document.getElementById("date");
-    const messageEl = document.getElementById("message");
     let clicks = 0;
-    
+
     function update() {
       const newDate = new Date(startDate);
       newDate.setDate(newDate.getDate() + clicks);
       dateEl.textContent = newDate.toLocaleDateString("en-US");
       if (clicks == 30) {
-        messageEl.textContent = "Gotta keep going...";
+        showMessage("Gotta keep going...")
       }
 
     }
@@ -30,13 +32,26 @@
       clicks += 1;
       update();
     }
-    
-    
-    if (clicks == 0){
-      alert("We've sent you back in time. We'll get you back at 2000. That should give you a month to finish your mission! Unless soemthing went wrong...");
+
+    function showMessage(text) {
+      const box = document.getElementById("textbox");
+      const msg = document.getElementById("message");
+
+      msg.textContent = text;
+      box.style.display = "block";
+
+      setTimeout(() => {
+        box.style.display = "none";
+      }, 2000);
+    }
+
+
+    if (clicks == 0) {
+      showMessage("We've sent you back in time. We'll get you back at 2000. That should give you a month to finish your mission! Unless something went wrong...");
     }
 
     update();
   </script>
 </body>
+
 </html>
