@@ -6,24 +6,34 @@
 </head>
 <body>
   <div class="game">
-    <h1>Y2Klick</h1>
+    <p id="message"></p>
     <button onclick="increment()">Date: <span id="date"></span></button>
   </div>
 
   <script>
     const startDate = new Date(1900, 0, 1);
     const dateEl = document.getElementById("date");
+    const messageEl = document.getElementById("message");
     let clicks = 0;
     
     function update() {
       const newDate = new Date(startDate);
       newDate.setDate(newDate.getDate() + clicks);
       dateEl.textContent = newDate.toLocaleDateString("en-US");
+      if (clicks == 30) {
+        messageEl.textContent = "Gotta keep going...";
+      }
+
     }
 
     function increment() {
       clicks += 1;
       update();
+    }
+    
+    
+    if (clicks == 0){
+      alert("We've sent you back in time. We'll get you back at 2000. That should give you a month to finish your mission! Unless soemthing went wrong...");
     }
 
     update();
