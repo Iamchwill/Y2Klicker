@@ -17,7 +17,7 @@
   <script>
     const startDate = new Date(1900, 0, 1);
     const dateEl = document.getElementById("date");
-    let clicks = 0;
+    let clicks = parseInt(localStorage.getItem("clicks")) || 0;;
 
     function update() {
       const newDate = new Date(startDate);
@@ -31,6 +31,7 @@
 
     function increment() {
       clicks += 1;
+      localStorage.setItem("clicks", clicks);
       update();
     }
 
