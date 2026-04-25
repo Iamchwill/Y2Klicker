@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const box = document.getElementById("textbox");
     const msg = document.getElementById("message");
     const buyPetBtn = document.getElementById("buyPetBtn");
+    const feedBtn = document.getElementById("feedBtn");
+    const hungerBar = document.getElementById("hunger");
+    const petUI = document.getElementById("petUI");
 
 
     let clicks = parseInt(localStorage.getItem("clicks")) || 0;
     let hasPet = JSON.parse(localStorage.getItem("hasPet")) || false;
+    let hunger = parseInt(localStorage.getItem("hunger")) || 100;
 
     clickerBtn.addEventListener("click", increment);
     reseterBtn.addEventListener("click", resetGame);
@@ -17,14 +21,28 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!hasPet && clicks >= 30) {
             hasPet = true;
             localStorage.setItem("hasPet", true);
+            petUI.style.display = "block";
             update();
         }
+    });
+    feedBtn.addEventListener("click", () => {
+        hunger = Math.min(100, hunger + 10);
+        update();
     });
 
     setInterval(() => {
         if (!hasPet) return;
+        hunger -= 1;
 
-        clicks += 1;
+        if (hunger > 0) {
+            clicks += 1;
+        }
+
+        if (hunger <= 0) {
+            hunger = 0;
+            showMessage("Your Tamagotchi is too hungry to work!");
+        }
+
         update();
     }, 1000);
 
@@ -34,6 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
         dateEl.textContent = newDate.toLocaleDateString("en-US");
 
         localStorage.setItem("clicks", clicks);
+        localStorage.setItem("hunger", hunger);
+
+        if (hasPet) {
+            petUI.style.display = "block";
+            hungerBar.textContent = hunger;
+        }
 
         if (clicks === 30) {
             showMessage("Gotta keep going...");
@@ -57,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetGame() {
         clicks = 0;
         localStorage.removeItem("clicks");
+        localStorage.removeItem("hasPet");
         update();
     }
 
