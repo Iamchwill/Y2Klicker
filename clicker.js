@@ -5,11 +5,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const reseterBtn = document.getElementById("resetBtn");
     const box = document.getElementById("textbox");
     const msg = document.getElementById("message");
+    const buyPetBtn = document.getElementById("buyPetBtn");
+
 
     let clicks = parseInt(localStorage.getItem("clicks")) || 0;
+    let hasPet = JSON.parse(localStorage.getItem("hasPet")) || false;
 
     clickerBtn.addEventListener("click", increment);
     reseterBtn.addEventListener("click", resetGame);
+    buyPetBtn.addEventListener("click", () => {
+        if (!hasPet && clicks >= 30) {
+            hasPet = true;
+            localStorage.setItem("hasPet", true);
+            update();
+        }
+    });
+
+    setInterval(() => {
+        if (!hasPet) return;
+
+        clicks += 1;
+        update();
+    }, 1000);
 
     function update() {
         const newDate = new Date(startDate);
